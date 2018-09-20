@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - recorder_wav (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - recorder_wav (from `.symlinks/plugins/recorder_wav/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  recorder_wav:
+    :path: ".symlinks/plugins/recorder_wav/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  recorder_wav: c65905dd6a9aae84746796a202810e4bf69405bc
+
+PODFILE CHECKSUM: 1e5af4103afd21ca5ead147d7b81d06f494f51a2
+
+COCOAPODS: 1.5.0

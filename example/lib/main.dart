@@ -13,6 +13,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  String fp = '';
 
   @override
   void initState() {
@@ -48,8 +49,33 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: new Center(
-          child: new Text('Running on: $_platformVersion\n'),
-        ),
+            child: ListView(children: <Widget>[
+          new Text('Running on: $_platformVersion\n'),
+          GestureDetector(
+            child: Container(
+              color: Colors.green,
+              width: 50.0,
+              height: 50.0,
+              child: Text('按下录音'),
+            ),
+            onTapDown: (TapDownDetails details) {
+              RecorderWav.startRecorder();
+            },
+            onTapUp: (TapUpDetails details) async {
+              String filePath = await RecorderWav.StopRecorder();
+              print(filePath);
+              fp = filePath;
+            },
+          ),
+          GestureDetector(
+            child: Container(
+              child: Text("DeleteFile"),
+            ),
+            onTap: () {
+              RecorderWav.removeRecorderFile(fp);
+            },
+          )
+        ])),
       ),
     );
   }
