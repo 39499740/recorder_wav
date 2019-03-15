@@ -43,7 +43,8 @@ public class RecorderWavPlugin implements MethodCallHandler {
             au.startRecord();
             return;
         } else if (call.method.equals("removeFile")) {
-            String fileName = call.argument("fileName");
+            System.out.println("aaaaa:"+call.argument("file"));
+            String fileName = call.argument("file");
             au.deleteFile(fileName);
         } else {
             result.notImplemented();

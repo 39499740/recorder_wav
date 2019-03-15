@@ -23,7 +23,7 @@ public class AudioUtil {
     //录音源
     private static int audioSource = MediaRecorder.AudioSource.MIC;
     //录音的采样频率
-    private static int audioRate = 44100;
+    private static int audioRate = 16000;
     //录音的声道，单声道
     private static int audioChannel = AudioFormat.CHANNEL_IN_MONO;
     //量化的深度
@@ -73,6 +73,8 @@ public class AudioUtil {
     public void startRecord() {
         isRecording = true;
         recorder.startRecording();
+        recordData();
+
     }
 
     //停止录音
@@ -132,6 +134,7 @@ public class AudioUtil {
             }
             in.close();
             out.close();
+            deleteFile(inFileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -251,6 +254,7 @@ public class AudioUtil {
      * @return 单个文件删除成功返回true，否则返回false
      */
     public static boolean deleteFile(String fileName) {
+        System.out.println(fileName);
         File file = new File(fileName);
         // 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
         if (file.exists() && file.isFile()) {
