@@ -1,8 +1,8 @@
 name: recorder_wav
 description: WAV录音机
 version: 0.1.0
-author:
-homepage:
+author:Bilibili502
+homepage:https://github.com/39499740/recorder_wav
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
