@@ -9,6 +9,7 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
+import android.app.Activity;
 
 
 
@@ -18,14 +19,22 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class RecorderWavPlugin implements MethodCallHandler {
 
 
-    AudioUtil au = new AudioUtil();
+
+
+    private RecorderWavPlugin(Registrar registrar) {
+        this.registrar = registrar;
+    }
+
+    private final Registrar registrar;
+
+    AudioUtil au;
 
     /**
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "recorder_wav");
-        channel.setMethodCallHandler(new RecorderWavPlugin());
+        channel.setMethodCallHandler(new RecorderWavPlugin(registrar));
     }
 
     @Override
@@ -39,7 +48,11 @@ public class RecorderWavPlugin implements MethodCallHandler {
             result.success(au.filePath);
             return;
         } else if (call.method.equals("startRecorder")) {
+            if(au == null){
+                au = new AudioUtil();
+            }
             System.out.println("开始录制");
+            au.createFile(registrar.activity());//创建文件
             au.startRecord();
             return;
         } else if (call.method.equals("removeFile")) {
@@ -50,9 +63,6 @@ public class RecorderWavPlugin implements MethodCallHandler {
             result.notImplemented();
         }
     }
-
-
-
 
 
 }

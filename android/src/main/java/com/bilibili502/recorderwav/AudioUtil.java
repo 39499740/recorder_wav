@@ -13,6 +13,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
+import android.app.Application;
+import io.flutter.plugin.common.PluginRegistry.Registrar;
+import android.app.Activity;
+
 
 
 public class AudioUtil {
@@ -41,17 +45,17 @@ public class AudioUtil {
     //文件输出流
     private OutputStream os;
     //文件根目录
-    private String basePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recorder_wav";
+//    private String basePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recorder_wav";
+    private String basePath;
     //wav文件目录
-    private String outFileName = basePath + "/" + fileName + ".wav";
+    private String outFileName;
     //pcm文件目录
-    private String inFileName = basePath + "/" + fileName + ".pcm";
+    private String inFileName;
 
-    public String filePath = outFileName;
+    public String filePath;
 
     public AudioUtil() {
-
-        createFile();//创建文件
+//        createFile();//创建文件
         recorder = new AudioRecord(audioSource, audioRate, audioChannel, audioFormat, bufferSize);
     }
 
@@ -134,6 +138,7 @@ public class AudioUtil {
             }
             in.close();
             out.close();
+            System.out.println(outFileName);
             deleteFile(inFileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -203,7 +208,13 @@ public class AudioUtil {
     }
 
     //创建文件夹,首先创建目录，然后创建对应的文件
-    public void createFile() {
+    public void createFile(Activity activity) {
+        basePath = activity.getCacheDir().getPath();
+
+
+        outFileName  = basePath + "/" + fileName + ".wav";
+        inFileName = basePath + "/" + fileName + ".pcm";
+        filePath = outFileName;
         File baseFile = new File(basePath);
         if (!baseFile.exists())
             baseFile.mkdirs();
